@@ -27,6 +27,7 @@ FENCE_COLOR = (153, 101, 21)
 GRASS = 0
 
 # terrain obstacles
+OBSTACLE = 1
 FENCE = 1
 
 # initialize Pygame
@@ -47,7 +48,23 @@ clock = pygame.time.Clock()
 # create a 500x500 park map with a fence perimeter
 park_map = [[1 if x == 0 or x == MAP_WIDTH - 1 or y == 0 or y == MAP_HEIGHT - 1 else 0 for x in range(MAP_WIDTH)] for y in range(MAP_HEIGHT)]
 
-# Load player sprite
+# Function to check for wall collision based on player's new position
+def check_collision(x, y):
+
+    # convert pixel position to tile index
+    tile_x = x // TILE_SIZE
+    tile_y = y // TILE_SIZE
+
+    # ensure the tile index is within the bounds of the map
+    if 0 <= tile_x < MAP_WIDTH and 0 <= tile_y < MAP_HEIGHT:
+
+        # true if collision detected
+        return park_map[tile_y][tile_x] >= OBSTACLE
+    
+    # out of bounds is considered a collision
+    return False
+
+# load player sprite
 player_image = pygame.image.load(SPRITE_RANGER_RACHEL)
 
 # player class
@@ -64,9 +81,17 @@ class Player(pygame.sprite.Sprite):
 
     def move(self, dx, dy):
 
-        # update player position based on input
-        self.rect.x += dx * self.speed
-        self.rect.y += dy * self.speed
+        # Calculate new position
+        new_x = self.rect.x + dx * self.speed
+        new_y = self.rect.y + dy * self.speed
+
+        # check for horizontal collision
+        if not check_collision(new_x, self.rect.y):
+            self.rect.x = new_x
+        
+        # check for vertical collision
+        if not check_collision(self.rect.x, new_y):
+            self.rect.y = new_y
         
         # prevent moving off-screen
         if self.rect.left < 0:
