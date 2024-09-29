@@ -7,6 +7,7 @@ import colors as color
 import camera as cam
 import player
 import litterbug
+import fireant
 import tree
 import pond
 
@@ -56,6 +57,12 @@ def initialize(screen, clock):
     const.LITTERBUGS.append(litterbug.Litterbug(35, 15, const.RIGHT, const.UP))
     const.LITTERBUGS.append(litterbug.Litterbug(35, 17, const.LEFT, 0))
     const.LITTERBUGS.append(litterbug.Litterbug(5, 1, const.RIGHT, 0))
+
+    # create fireants
+    const.FIREANTS.append(fireant.Fireant(40, 5, const.LEFT, const.DOWN))
+    const.FIREANTS.append(fireant.Fireant(15, 2, const.LEFT, const.UP))
+    const.FIREANTS.append(fireant.Fireant(15, 9, const.RIGHT, const.DOWN))
+    const.FIREANTS.append(fireant.Fireant(15, 20, const.RIGHT, const.UP))
     
     return (screen, clock)
 
@@ -152,6 +159,10 @@ def main():
         # update litterbugs
         for bug in const.LITTERBUGS:
             bug.update()
+
+        # update fireants
+        for bug in const.FIREANTS:
+            bug.update()
         
         # draw park map
         for row in range(const.MAP_HEIGHT):
@@ -182,6 +193,10 @@ def main():
 
         # draw litterbugs
         for bug in const.LITTERBUGS:
+            screen.blit(bug.image, camera.apply(bug.rect))
+
+        # draw fireants
+        for bug in const.FIREANTS:
             screen.blit(bug.image, camera.apply(bug.rect))
 
         # draw trees

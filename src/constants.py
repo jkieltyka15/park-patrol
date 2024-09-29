@@ -38,6 +38,9 @@ JUNK_TO_TREES = 10
 LITTERBUGS = []
 JUNK = []
 
+# fireants
+FIREANTS = []
+
 # dimensions
 TILE_SIZE = 100
 TILE_2D = (TILE_SIZE, TILE_SIZE)

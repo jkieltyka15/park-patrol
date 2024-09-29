@@ -7,18 +7,29 @@ import constants as const
 import junk
 
 # sprite assets
-SPRITE_LITTER_BUG_L = os.path.join(const.ASSET_DIR, "litterbug_left.png")
-SPRITE_LITTER_BUG_R = os.path.join(const.ASSET_DIR, "litterbug_right.png")
+SPRITE_FIREANT_L = os.path.join(const.ASSET_DIR, "fire-ant_left.png")
+SPRITE_FIREANT_R = os.path.join(const.ASSET_DIR, "fire-ant_right.png")
 
-# litterbug class
-class Litterbug(pygame.sprite.Sprite):
+# fireant class
+class Fireant(pygame.sprite.Sprite):
 
     def __init__(self, x, y, x_direction, y_direction):
 
         super().__init__()
 
-        self.image_bug_left = pygame.image.load(SPRITE_LITTER_BUG_L)
-        self.image_bug_right = pygame.image.load(SPRITE_LITTER_BUG_R)
+        self.image_bug_left = pygame.image.load(SPRITE_FIREANT_L)
+        self.image_bug_right = pygame.image.load(SPRITE_FIREANT_R)
+
+        # scale images
+        scale = 0.2
+
+        self.image_bug_left = pygame.transform.scale(self.image_bug_left,
+                                                      (self.image_bug_left.get_width() * scale,
+                                                       self.image_bug_left.get_height() * scale))
+        
+        self.image_bug_right = pygame.transform.scale(self.image_bug_right,
+                                                      (self.image_bug_right.get_width() * scale,
+                                                       self.image_bug_right.get_height() * scale))
 
         # traveling left first
         if x_direction == const.LEFT:
@@ -35,17 +46,23 @@ class Litterbug(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = (x * const.TILE_SIZE, y * const.TILE_SIZE)
 
-        self.speed = 4
+        self.speed = 10
         self.direction = (x_direction, y_direction)
 
-    
-    def drop_junk(self):
 
-        # one in twenty probality of dropping junk
-        if random.randint(1, 500) == 250:
-            x = (self.rect.left // const.TILE_SIZE + self.rect.right // const.TILE_SIZE) / 2
-            y = (self.rect.top // const.TILE_SIZE + self.rect.bottom // const.TILE_SIZE) / 2
-            const.JUNK.append(junk.Junk(x, y))  # Adjust to center the item
+    def torch_tree(self, rect):
+
+        # check if tree is is being contacted
+        forest = const.TREES
+        for veggie in forest:
+
+            # tree is within reach
+            if rect.colliderect(veggie):
+
+                # tree can be torched
+                if (veggie.get_state() == const.TREE_GOOD):
+                    
+                    veggie.set_state(const.TREE_ON_FIRE)
 
 
     def check_collision(self, rect):
@@ -89,9 +106,10 @@ class Litterbug(pygame.sprite.Sprite):
         obstacles.append(const.RANGER_RACHEL)
         obstacles.append(const.POND)
         obstacles = obstacles + const.TREES
-        obstacles = obstacles + const.FIREANTS
 
         obstacles = obstacles + const.LITTERBUGS
+
+        obstacles = obstacles + const.FIREANTS
         obstacles.remove(self)
 
         # check all obstacles for collisions
@@ -138,6 +156,9 @@ class Litterbug(pygame.sprite.Sprite):
         dx, dy = self.direction
         new_rect = self.rect.move(dx * self.speed, dy * self.speed)
 
+        # torch tree if possible
+        self.torch_tree(new_rect)
+
         # check for collision
         collision = self.check_collision(new_rect)
 
@@ -171,6 +192,3 @@ class Litterbug(pygame.sprite.Sprite):
 
         elif dx == const.RIGHT:
             self.image = self.image_bug_right
-
-        # chance to drop junk
-        self.drop_junk()

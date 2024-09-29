@@ -99,6 +99,7 @@ class Player(pygame.sprite.Sprite):
         obstacles.append(const.POND)
         obstacles = obstacles + const.TREES
         obstacles = obstacles + const.LITTERBUGS
+        obstacles = obstacles + const.FIREANTS
 
         # check if collision with all obstacles
         for obstacle in obstacles:
