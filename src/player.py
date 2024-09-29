@@ -44,6 +44,20 @@ class Player(pygame.sprite.Sprite):
                 const.JUNK.remove(trash)
                 const.INVENTORY_JUNK += 1
 
+
+    def eleminate_fireants(self, new_rect):
+
+        # check if fireant can be eliminated
+        bugs = const.FIREANTS
+        for bug in bugs:
+
+            # junk can be picked up
+            if self.rect.colliderect(bug.rect) and const.INVENTORY_WATER > 0:
+
+                const.FIREANTS.remove(bug)
+                const.INVENTORY_WATER -= 1
+
+
     def tend_trees(self, rect):
 
         # check if tree is is being contacted
@@ -127,6 +141,9 @@ class Player(pygame.sprite.Sprite):
 
         # tend to trees if within reach
         self.tend_trees(new_rect)
+
+        # eleminate fireant if possible
+        self.eleminate_fireants(new_rect)
 
         # check for collision
         if not self.check_collision(new_rect):

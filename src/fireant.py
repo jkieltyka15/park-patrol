@@ -103,7 +103,6 @@ class Fireant(pygame.sprite.Sprite):
         # add all obstacles to list
         obstacles = []
 
-        obstacles.append(const.RANGER_RACHEL)
         obstacles.append(const.POND)
         obstacles = obstacles + const.TREES
 
@@ -117,6 +116,9 @@ class Fireant(pygame.sprite.Sprite):
 
             # collision detected with obstacle
             if rect.colliderect(obstacle.rect):
+
+                if obstacle is const.RANGER_RACHEL and const.INVENTORY_WATER > 0:
+                    continue
 
                 # horizontal collision
                 if obstacle.rect.right >= rect.left:
