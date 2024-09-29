@@ -35,3 +35,9 @@ GRASS = 0
 # terrain obstacles
 OBSTACLE = 1
 ROCK = 1
+
+# directions
+UP = -1
+DOWN = 1
+LEFT = -1
+RIGHT =  1

@@ -79,19 +79,19 @@ def main():
 
         # left
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            dx = -1
+            dx = const.LEFT
         
         # right
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            dx = 1
+            dx = const.RIGHT
 
         # up
         if keys[pygame.K_w] or keys[pygame.K_UP]:
-            dy = -1
+            dy = const.UP
 
         # down
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            dy = 1
+            dy = const.DOWN
 
         # run
         if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:

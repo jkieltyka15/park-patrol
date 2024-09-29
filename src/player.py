@@ -6,7 +6,8 @@ import constants as const
 import utility as util
 
 # sprite assets
-SPRITE_RANGER_RACHEL = os.path.join(const.ASSET_DIR, "ranger-rachel.png")
+SPRITE_RANGER_RACHEL_L = os.path.join(const.ASSET_DIR, "ranger-rachel_left.png")
+SPRITE_RANGER_RACHEL_R = os.path.join(const.ASSET_DIR, "ranger-rachel_right.png")
 
 # player class
 class Player(pygame.sprite.Sprite):
@@ -14,9 +15,14 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
 
         super().__init__()
-        self.image = pygame.image.load(SPRITE_RANGER_RACHEL)
+
+        self.image_player_left = pygame.image.load(SPRITE_RANGER_RACHEL_L)
+        self.image_player_right = pygame.image.load(SPRITE_RANGER_RACHEL_R)
+
+        self.image = self.image_player_right
         self.rect = self.image.get_rect()
         self.rect.topleft = (x * const.TILE_SIZE, y * const.TILE_SIZE)
+
         self.speed = 8
 
 
@@ -41,3 +47,10 @@ class Player(pygame.sprite.Sprite):
 
         if self.rect.bottom > const.MAP_HEIGHT * const.TILE_SIZE:
             self.rect.bottom = const.MAP_HEIGHT * const.TILE_SIZE
+
+        # make player sprite face direction of travel
+        if dx == const.LEFT:
+            self.image = self.image_player_left
+
+        elif dx == const.RIGHT:
+            self.image = self.image_player_right
