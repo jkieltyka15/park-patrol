@@ -48,7 +48,8 @@ class Player(pygame.sprite.Sprite):
         
         # add all obstacles to list
         obstacles = []
-        
+        obstacles.append(const.POND)
+        obstacles = obstacles + const.TREES
         obstacles = obstacles + const.LITTERBUGS
 
         # check if collision with all obstacles

@@ -40,7 +40,7 @@ class Litterbug(pygame.sprite.Sprite):
     def check_collision(self, rect):
 
         # direction of collision
-        collision = (0 , 0)
+        collision = (0, 0)
 
         # convert pixel position to tile indices for all four corners of the litterbug's rect
         top_left = (rect.left // const.TILE_SIZE, rect.top // const.TILE_SIZE)
@@ -74,8 +74,10 @@ class Litterbug(pygame.sprite.Sprite):
 
         # add all obstacles to list
         obstacles = []
-        
+
         obstacles.append(const.RANGER_RACHEL)
+        obstacles.append(const.POND)
+        obstacles = obstacles + const.TREES
 
         obstacles = obstacles + const.LITTERBUGS
         obstacles.remove(self)

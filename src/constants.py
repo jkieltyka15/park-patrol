@@ -18,7 +18,16 @@ SCREEN_HEIGHT = None
 # the game map, which will be set in main (dynamic)
 PARK_MAP = None
 
-# ranger rachel player, whcih will be set in  (dynamic)
+# pond for the map
+POND = None
+
+# list of trees (dynamic)
+TREES = []
+TREE_GOOD = 0
+TREE_STUMP = 1
+TREE_ON_FIRE = 2
+
+# ranger rachel player, whcih will be set in (dynamic)
 RANGER_RACHEL = None
 
 # list of litterbug enemies, which will be set in main (dynamic)
