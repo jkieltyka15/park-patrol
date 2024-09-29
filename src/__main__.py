@@ -1,5 +1,6 @@
 import pygame
 import sys
+import os
 
 # local libraries
 import constants as const
@@ -16,6 +17,12 @@ def initialize(screen, clock):
 
     # initialize Pygame
     pygame.init()
+
+    # start background music
+    music_file = os.path.join(const.ASSET_DIR, "background-music.mp3")
+    pygame.mixer.init()
+    pygame.mixer.music.load(music_file) 
+    pygame.mixer.music.play(-1,0.0)
 
     # get display information for fullscreen mode
     infoObject = pygame.display.Info()
@@ -241,6 +248,7 @@ def main():
             # player has won
             if is_victory:
                 pygame.time.delay(1000)
+                pygame.mixer.stop()
                 display_victory(screen)
         
         # Update the display
