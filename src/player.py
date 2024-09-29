@@ -35,16 +35,23 @@ class Player(pygame.sprite.Sprite):
             (rect.right // const.TILE_SIZE, rect.bottom // const.TILE_SIZE),    # bottom-right
         ]
 
-        # Check each corner for collision with a walls
+        # Check each corner for collision with obstacle
         for corner in corners:
 
             (tile_x, tile_y) = corner
 
             if (0 <= tile_x < const.MAP_WIDTH) and (0 <= tile_y < const.MAP_HEIGHT):
 
-                # collision detected
+                # collision detected with map obstacle
                 if const.PARK_MAP[tile_y][tile_x] == const.OBSTACLE:
                     return True
+                
+                # check if collision with litterbugs
+                for bug in const.LITTERBUGS:
+
+                    # collision detected
+                    if rect.colliderect(bug.rect):
+                        return True
                 
         return False
 

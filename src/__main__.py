@@ -50,18 +50,17 @@ def main():
     rock_image = pygame.transform.scale(rock_image, const.TILE_2D)
 
     # create player
-    ranger = player.Player(5, 5)
+    RANGER_RACHEL = player.Player(5, 5)
 
     # create litterbugs
-    litterbugs = []
-    litterbugs.append(litterbug.Litterbug(10, 10, 0, const.DOWN))
-    litterbugs.append(litterbug.Litterbug(20, 15, const.LEFT, const.DOWN))
-    litterbugs.append(litterbug.Litterbug(30, 20, const.RIGHT, const.DOWN))
-    litterbugs.append(litterbug.Litterbug(40, 15, 0, const.UP))
-    litterbugs.append(litterbug.Litterbug(30, 20, const.LEFT, const.UP))
-    litterbugs.append(litterbug.Litterbug(20, 10, const.RIGHT, const.UP))
-    litterbugs.append(litterbug.Litterbug(10, 15, const.LEFT, 0))
-    litterbugs.append(litterbug.Litterbug(30, 20, const.RIGHT, 0))
+    const.LITTERBUGS.append(litterbug.Litterbug(10, 10, 0, const.DOWN))
+    const.LITTERBUGS.append(litterbug.Litterbug(20, 15, const.LEFT, const.DOWN))
+    const.LITTERBUGS.append(litterbug.Litterbug(30, 20, const.RIGHT, const.DOWN))
+    const.LITTERBUGS.append(litterbug.Litterbug(40, 15, 0, const.UP))
+    const.LITTERBUGS.append(litterbug.Litterbug(30, 20, const.LEFT, const.UP))
+    const.LITTERBUGS.append(litterbug.Litterbug(20, 10, const.RIGHT, const.UP))
+    const.LITTERBUGS.append(litterbug.Litterbug(10, 15, const.LEFT, 0))
+    const.LITTERBUGS.append(litterbug.Litterbug(30, 20, const.RIGHT, 0))
 
     # initialize camera
     camera = cam.Camera(const.MAP_WIDTH * const.TILE_SIZE, const.MAP_HEIGHT * const.TILE_SIZE)
@@ -111,11 +110,11 @@ def main():
             dx *= 2
         
         # update ranger rachel and camera
-        ranger.move(dx, dy)
-        camera.update(ranger)
+        RANGER_RACHEL.move(dx, dy)
+        camera.update(RANGER_RACHEL)
 
         # update litterbugs
-        for bug in litterbugs:
+        for bug in const.LITTERBUGS:
             bug.update()
         
         # draw park map
@@ -136,10 +135,10 @@ def main():
                     screen.blit(grass_image, camera.apply(tile_rect))
 
         # draw ranger rachel
-        screen.blit(ranger.image, camera.apply(ranger.rect))
+        screen.blit(RANGER_RACHEL.image, camera.apply(RANGER_RACHEL.rect))
 
         # draw litterbugs
-        for bug in litterbugs:
+        for bug in const.LITTERBUGS:
             screen.blit(bug.image, camera.apply(bug.rect))
         
         # Update the display

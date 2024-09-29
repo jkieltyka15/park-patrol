@@ -18,6 +18,12 @@ SCREEN_HEIGHT = None
 # the game map, which will be set in main (dynamic)
 PARK_MAP = None
 
+# ranger rachel player, whcih will be set in main
+RANGER_RACHEL = None
+
+# list of litterbug enemies, which will be set in main
+LITTERBUGS = []
+
 # dimensions
 TILE_SIZE = 100
 TILE_2D = (TILE_SIZE, TILE_SIZE)
