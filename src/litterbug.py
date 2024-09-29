@@ -26,7 +26,7 @@ class Litterbug(pygame.sprite.Sprite):
         elif x_direction == const.RIGHT:
             self.image = self.image_bug_right
 
-        # traveling vertically first
+        # traveling vertically first or is not moving
         else:
             self.image = self.image_bug_right
 
@@ -34,18 +34,21 @@ class Litterbug(pygame.sprite.Sprite):
         self.rect.topleft = (x * const.TILE_SIZE, y * const.TILE_SIZE)
 
         self.speed = 4
-        direction = (x_direction, y_direction)
+        self.direction = (x_direction, y_direction)
 
 
     def check_collision(self, rect):
 
-        # convert pixel position to tile indices for all four corners of the player's rect
-        corners = [
-            (rect.left // const.TILE_SIZE, rect.top // const.TILE_SIZE),        # top-left
-            (rect.right // const.TILE_SIZE, rect.top // const.TILE_SIZE),       # top-right
-            (rect.left // const.TILE_SIZE, rect.bottom // const.TILE_SIZE),     # bottom-left
-            (rect.right // const.TILE_SIZE, rect.bottom // const.TILE_SIZE),    # bottom-right
-        ]
+        # direction of obstacle
+        obstacle = (0 , 0)
+
+        # convert pixel position to tile indices for all four corners of the litterbug's rect
+        top_left = (rect.left // const.TILE_SIZE, rect.top // const.TILE_SIZE)
+        top_right = (rect.right // const.TILE_SIZE, rect.top // const.TILE_SIZE)
+        bottom_left = (rect.left // const.TILE_SIZE, rect.bottom // const.TILE_SIZE)
+        bottom_right = (rect.right // const.TILE_SIZE, rect.bottom // const.TILE_SIZE)
+
+        corners = [top_left, top_right, bottom_left, bottom_right]
 
         # Check each corner for collision with a walls
         for corner in corners:
@@ -56,20 +59,57 @@ class Litterbug(pygame.sprite.Sprite):
 
                 # collision detected
                 if const.PARK_MAP[tile_y][tile_x] == const.OBSTACLE:
-                    return True
+                    
+                    if corner == top_left:
+                        obstacle = tuple(map(lambda i, j: i + j, obstacle, (const.LEFT, const.UP)))
+
+                    elif corner == top_right:
+                        obstacle = (map(lambda i, j: i + j, obstacle, (const.RIGHT, const.UP)))
+
+                    elif corner == bottom_left:
+                        obstacle = tuple(map(lambda i, j: i + j, obstacle, (const.LEFT, const.DOWN)))
+
+                    elif corner == bottom_right:
+                        obstacle = tuple(map(lambda i, j: i + j, obstacle, (const.RIGHT, const.DOWN)))
+
+        # normalize obstacle values
+        obstacle = tuple(obstacle)
+
+        if obstacle[0] > 0:
+            obstacle = (const.RIGHT, obstacle[1])
+        
+        elif obstacle[0] < 0:
+            obstacle = (const.LEFT, obstacle[1])
+        
+        if obstacle[1] > 0:
+            obstacle = (obstacle[0], const.DOWN)
+        
+        elif obstacle[1] < 0:
+            obstacle = (obstacle[0], const.UP)
                 
-        return False
+        return obstacle
 
 
-    def move(self, dx, dy):
+    def update(self):
 
         # calculate new position
+        dx, dy = self.direction
         new_rect = self.rect.move(dx * self.speed, dy * self.speed)
 
         # check for collision
-        if not self.check_collision(new_rect):
-            self.rect = new_rect
-        
+        collision = self.check_collision(new_rect)
+
+        # change direction if there is a collision
+        if collision[0] != 0:
+            dx = -dx
+
+        if collision[1] != 0:
+            dy = -dy
+
+        self.direction = (dx, dy)
+
+        self.rect = self.rect.move(dx * self.speed, dy * self.speed)
+
         # prevent moving off-screen
         if self.rect.left < 0:
             self.rect.left = 0
