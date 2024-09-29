@@ -3,6 +3,7 @@ import os
 
 # local libraries
 import constants as const
+import tree
 
 # sprite assets
 SPRITE_RANGER_RACHEL_L = os.path.join(const.ASSET_DIR, "ranger-rachel_left.png")
@@ -42,6 +43,27 @@ class Player(pygame.sprite.Sprite):
 
                 const.JUNK.remove(trash)
                 const.INVENTORY_JUNK += 1
+
+    def tend_trees(self, rect):
+
+        # check if tree is is being contacted
+        forest = const.TREES
+        for veggie in forest:
+
+            # tree is within reach
+            if rect.colliderect(veggie):
+
+                # tree is on fire and can be put out
+                if (veggie.get_state() == const.TREE_ON_FIRE) and (const.INVENTORY_WATER > 0):
+                    
+                    veggie.set_state(const.TREE_STUMP)
+                    const.INVENTORY_WATER -= 1
+
+                # new tree can be planted
+                if (veggie.get_state() == const.TREE_STUMP) and (const.INVENTORY_TREES > 0):
+
+                    veggie.set_state(const.TREE_GOOD)
+                    const.INVENTORY_TREES -= 1
 
     
     def trade_junk_for_trees(self):
@@ -101,6 +123,9 @@ class Player(pygame.sprite.Sprite):
 
         # get water if by pond
         self.get_water(new_rect)
+
+        # tend to trees if within reach
+        self.tend_trees(new_rect)
 
         # check for collision
         if not self.check_collision(new_rect):

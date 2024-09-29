@@ -52,13 +52,21 @@ class Tree(pygame.sprite.Sprite):
         self.rect.topleft = (x * const.TILE_SIZE, y * const.TILE_SIZE)
 
 
-    def change_state(self, new_state):
+    def set_state(self, new_state):
 
         if new_state == const.TREE_STUMP:
+            self.state = new_state
             self.image = self.image_tree_stump
 
         elif new_state == const.TREE_ON_FIRE:
+            self.state = new_state
             self.image = self.image_tree_fire
 
         elif new_state == const.TREE_GOOD:
+            self.state = new_state
             self.image = self.image_tree_good
+
+
+    def get_state(self):
+
+        return self.state
