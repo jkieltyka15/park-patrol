@@ -50,7 +50,7 @@ def main():
     rock_image = pygame.transform.scale(rock_image, const.TILE_2D)
 
     # create player
-    RANGER_RACHEL = player.Player(5, 5)
+    const.RANGER_RACHEL = player.Player(5, 5)
 
     # create litterbugs
     const.LITTERBUGS.append(litterbug.Litterbug(10, 10, 0, const.DOWN))
@@ -110,8 +110,8 @@ def main():
             dx *= 2
         
         # update ranger rachel and camera
-        RANGER_RACHEL.move(dx, dy)
-        camera.update(RANGER_RACHEL)
+        const.RANGER_RACHEL.move(dx, dy)
+        camera.update(const.RANGER_RACHEL)
 
         # update litterbugs
         for bug in const.LITTERBUGS:
@@ -135,7 +135,7 @@ def main():
                     screen.blit(grass_image, camera.apply(tile_rect))
 
         # draw ranger rachel
-        screen.blit(RANGER_RACHEL.image, camera.apply(RANGER_RACHEL.rect))
+        screen.blit(const.RANGER_RACHEL.image, camera.apply(const.RANGER_RACHEL.rect))
 
         # draw litterbugs
         for bug in const.LITTERBUGS:

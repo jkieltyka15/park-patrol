@@ -39,8 +39,8 @@ class Litterbug(pygame.sprite.Sprite):
 
     def check_collision(self, rect):
 
-        # direction of obstacle
-        obstacle = (0 , 0)
+        # direction of collision
+        collision = (0 , 0)
 
         # convert pixel position to tile indices for all four corners of the litterbug's rect
         top_left = (rect.left // const.TILE_SIZE, rect.top // const.TILE_SIZE)
@@ -50,44 +50,68 @@ class Litterbug(pygame.sprite.Sprite):
 
         corners = [top_left, top_right, bottom_left, bottom_right]
 
-        # Check each corner for collision with a walls
+        # check each corner for collision with collision
         for corner in corners:
 
             (tile_x, tile_y) = corner
 
             if (0 <= tile_x < const.MAP_WIDTH) and (0 <= tile_y < const.MAP_HEIGHT):
 
-                # collision detected
+                # collision detected with map collision
                 if const.PARK_MAP[tile_y][tile_x] == const.OBSTACLE:
                     
                     if corner == top_left:
-                        obstacle = tuple(map(lambda i, j: i + j, obstacle, (const.LEFT, const.UP)))
+                        collision = tuple(map(lambda i, j: i + j, collision, (const.LEFT, const.UP)))
 
                     elif corner == top_right:
-                        obstacle = (map(lambda i, j: i + j, obstacle, (const.RIGHT, const.UP)))
+                        collision = (map(lambda i, j: i + j, collision, (const.RIGHT, const.UP)))
 
                     elif corner == bottom_left:
-                        obstacle = tuple(map(lambda i, j: i + j, obstacle, (const.LEFT, const.DOWN)))
+                        collision = tuple(map(lambda i, j: i + j, collision, (const.LEFT, const.DOWN)))
 
                     elif corner == bottom_right:
-                        obstacle = tuple(map(lambda i, j: i + j, obstacle, (const.RIGHT, const.DOWN)))
+                        collision = tuple(map(lambda i, j: i + j, collision, (const.RIGHT, const.DOWN)))
 
-        # normalize obstacle values
-        obstacle = tuple(obstacle)
+        # add all obstacles to list
+        obstacles = []
+        obstacles.append(const.RANGER_RACHEL)
 
-        if obstacle[0] > 0:
-            obstacle = (const.RIGHT, obstacle[1])
+        # check all obstacles for collisions
+        for obstacle in obstacles:
+
+            # collision detected with obstacle
+            if rect.colliderect(const.RANGER_RACHEL.rect):
+
+                # horizontal collision
+                if obstacle.rect.right >= rect.left:
+                    collision = tuple(map(lambda i, j: i + j, collision, (const.LEFT, 0)))
+
+                elif obstacle.rect.left <= rect.right:
+                    collision = tuple(map(lambda i, j: i + j, collision, (const.RIGHT, 0)))
+
+                # vertical collision
+                if obstacle.rect.bottom >= rect.top:
+                    collision = tuple(map(lambda i, j: i + j, collision, (0, const.UP)))
+
+                elif obstacle.rect.top <= rect.bottom:
+                    collision = tuple(map(lambda i, j: i + j, collision, (0, const.DOWN)))
+
+        # normalize collision values
+        collision = tuple(collision)
+
+        if collision[0] > 0:
+            collision = (const.RIGHT, collision[1])
         
-        elif obstacle[0] < 0:
-            obstacle = (const.LEFT, obstacle[1])
+        elif collision[0] < 0:
+            collision = (const.LEFT, collision[1])
         
-        if obstacle[1] > 0:
-            obstacle = (obstacle[0], const.DOWN)
+        if collision[1] > 0:
+            collision = (collision[0], const.DOWN)
         
-        elif obstacle[1] < 0:
-            obstacle = (obstacle[0], const.UP)
+        elif collision[1] < 0:
+            collision = (collision[0], const.UP)
                 
-        return obstacle
+        return collision
 
 
     def update(self):
