@@ -176,19 +176,19 @@ def main():
         dx = dy = 0
 
         # left
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             dx = -1
         
         # right
-        if keys[pygame.K_d]:
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             dx = 1
 
-        # down
-        if keys[pygame.K_w]:
+        # up
+        if keys[pygame.K_w] or keys[pygame.K_UP]:
             dy = -1
 
-        # up
-        if keys[pygame.K_s]:
+        # down
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             dy = 1
         
         # update player and camera
