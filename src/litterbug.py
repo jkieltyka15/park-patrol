@@ -41,11 +41,12 @@ class Litterbug(pygame.sprite.Sprite):
     
     def drop_junk(self):
 
-        # one in twenty probality of dropping junk
-        if random.randint(1, 500) == 250:
+        # randomly drop junk
+        if random.randint(1, 300) == 150:
+
             x = (self.rect.left // const.TILE_SIZE + self.rect.right // const.TILE_SIZE) / 2
             y = (self.rect.top // const.TILE_SIZE + self.rect.bottom // const.TILE_SIZE) / 2
-            const.JUNK.append(junk.Junk(x, y))  # Adjust to center the item
+            const.JUNK.append(junk.Junk(x, y))
 
 
     def check_collision(self, rect):
@@ -88,7 +89,7 @@ class Litterbug(pygame.sprite.Sprite):
 
         obstacles.append(const.RANGER_RACHEL)
         obstacles.append(const.POND)
-        obstacles = obstacles + const.TREES
+        obstacles = obstacles + [veggie for veggie in const.TREES if veggie.get_state() != const.TREE_GOOD]
         obstacles = obstacles + const.FIREANTS
 
         obstacles = obstacles + const.LITTERBUGS

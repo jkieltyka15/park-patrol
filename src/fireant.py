@@ -4,7 +4,6 @@ import os
 
 # local libraries
 import constants as const
-import junk
 
 # sprite assets
 SPRITE_FIREANT_L = os.path.join(const.ASSET_DIR, "fire-ant_left.png")
@@ -104,8 +103,8 @@ class Fireant(pygame.sprite.Sprite):
         obstacles = []
 
         obstacles.append(const.POND)
-        obstacles = obstacles + const.TREES
-
+        obstacles.append(const.RANGER_RACHEL)
+        obstacles = obstacles + [veggie for veggie in const.TREES if veggie.get_state() != const.TREE_GOOD]
         obstacles = obstacles + const.LITTERBUGS
 
         obstacles = obstacles + const.FIREANTS

@@ -37,7 +37,7 @@ def initialize(screen, clock):
     
     # create trees
     const.TREES.append(tree.Tree(const.TREE_STUMP, 13, 13))
-    const.TREES.append(tree.Tree(const.TREE_STUMP, 40, 15))
+    const.TREES.append(tree.Tree(const.TREE_ON_FIRE, 40, 15))
     const.TREES.append(tree.Tree(const.TREE_STUMP, 8, 5))
     const.TREES.append(tree.Tree(const.TREE_STUMP, 2, 15))
     const.TREES.append(tree.Tree(const.TREE_ON_FIRE, 40, 6))
@@ -87,6 +87,27 @@ def display_inventory(screen):
     
     # blit the text onto the screen
     screen.blit(item_text, (position[0], position[1] + 10))
+
+# display victory screen when all objectives are completed
+def display_victory(screen):
+
+    win_font = pygame.font.SysFont(None, 144)
+    win_text = win_font.render("You saved the park!", True, color.WHITE)
+
+    # black out screen
+    screen.fill(color.BLACK)
+
+    # write text
+    screen.blit(win_text, (const.SCREEN_WIDTH // 2 - win_text.get_width() // 2,
+                           const.SCREEN_HEIGHT // 2 - win_text.get_height() // 2))
+    
+    # update display
+    pygame.display.update()
+
+    # display screen for 3 seconds
+    pygame.time.delay(3000)
+    pygame.quit()
+    sys.exit()
 
 
 # initializes game and runs game loop
@@ -148,7 +169,7 @@ def main():
             dy = const.DOWN
 
         # run
-        if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
+        if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT] or keys[pygame.K_SPACE]:
             dy *= 2
             dx *= 2
         
@@ -205,6 +226,22 @@ def main():
 
         # draw inventory board
         display_inventory(screen)
+
+        # all fireants must have been eliminated
+        if len(const.FIREANTS) == 0:
+
+            is_victory = True;
+
+            # all trees must be healthy
+            for veggie in const.TREES:
+
+                if veggie.get_state() != const.TREE_GOOD:
+                    is_victory = False;
+
+            # player has won
+            if is_victory:
+                pygame.time.delay(1000)
+                display_victory(screen)
         
         # Update the display
         pygame.display.flip()

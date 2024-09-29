@@ -3,7 +3,6 @@ import os
 
 # local libraries
 import constants as const
-import tree
 
 # sprite assets
 SPRITE_RANGER_RACHEL_L = os.path.join(const.ASSET_DIR, "ranger-rachel_left.png")
@@ -111,7 +110,7 @@ class Player(pygame.sprite.Sprite):
         # add all obstacles to list
         obstacles = []
         obstacles.append(const.POND)
-        obstacles = obstacles + const.TREES
+        obstacles = obstacles + [veggie for veggie in const.TREES if veggie.get_state() != const.TREE_GOOD]
         obstacles = obstacles + const.LITTERBUGS
         obstacles = obstacles + const.FIREANTS
 
@@ -163,8 +162,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = const.MAP_HEIGHT * const.TILE_SIZE
 
         # make player sprite face direction of travel
-        if dx == const.LEFT:
+        if dx < 0:
             self.image = self.image_player_left
 
-        elif dx == const.RIGHT:
+        elif dx > 0:
             self.image = self.image_player_right

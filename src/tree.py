@@ -66,6 +66,11 @@ class Tree(pygame.sprite.Sprite):
             self.state = new_state
             self.image = self.image_tree_good
 
+        x = self.rect.left // const.TILE_SIZE
+        y = self.rect.top // const.TILE_SIZE
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x * const.TILE_SIZE, y * const.TILE_SIZE)
+
 
     def get_state(self):
 
