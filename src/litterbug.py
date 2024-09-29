@@ -74,13 +74,17 @@ class Litterbug(pygame.sprite.Sprite):
 
         # add all obstacles to list
         obstacles = []
+        
         obstacles.append(const.RANGER_RACHEL)
+
+        obstacles = obstacles + const.LITTERBUGS
+        obstacles.remove(self)
 
         # check all obstacles for collisions
         for obstacle in obstacles:
 
             # collision detected with obstacle
-            if rect.colliderect(const.RANGER_RACHEL.rect):
+            if rect.colliderect(obstacle.rect):
 
                 # horizontal collision
                 if obstacle.rect.right >= rect.left:
