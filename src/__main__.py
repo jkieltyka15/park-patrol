@@ -15,6 +15,7 @@ TARGET_FPS = 60
 # sprite assets
 SPRITE_RANGER_RACHEL = os.path.join(ASSET_DIR, "ranger-rachel.png")
 SPRITE_GRASS = os.path.join(ASSET_DIR, "grass.png")
+SPRITE_ROCK = os.path.join(ASSET_DIR, "rock.png")
 
 # dimensions
 TILE_SIZE = 100
@@ -22,16 +23,12 @@ TILE_2D = (TILE_SIZE, TILE_SIZE)
 MAP_HEIGHT = 25
 MAP_WIDTH = MAP_HEIGHT * 2
 
-# colors
-GRASS_COLOR = (0, 154, 23)
-FENCE_COLOR = (153, 101, 21)
-
 # traversable terrains
 GRASS = 0
 
 # terrain obstacles
 OBSTACLE = 1
-FENCE = 1
+ROCK = 1
 
 # initialize Pygame
 pygame.init()
@@ -48,7 +45,7 @@ pygame.display.set_caption(GAME_NAME)
 # create clock for FPS control
 clock = pygame.time.Clock()
 
-# create a 500x500 park map with a fence perimeter
+# create a 500x500 park map with a rock perimeter
 park_map = [[1 if x == 0 or x == MAP_WIDTH - 1 or y == 0 or y == MAP_HEIGHT - 1 else 0 for x in range(MAP_WIDTH)] for y in range(MAP_HEIGHT)]
 
 # Function to check for wall collision based on player's new position
@@ -72,10 +69,11 @@ player_image = pygame.image.load(SPRITE_RANGER_RACHEL)
 
 # load terrain sprites
 grass_image = pygame.image.load(SPRITE_GRASS)
+rock_image = pygame.image.load(SPRITE_ROCK)
 
 # scale terrain sprites
 grass_image = pygame.transform.scale(grass_image, TILE_2D)
-
+rock_image = pygame.transform.scale(rock_image, TILE_2D)
 
 # player class
 class Player(pygame.sprite.Sprite):
@@ -204,12 +202,11 @@ def main():
                 tile = park_map[row][col]
                 tile_rect = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
 
-                # tile is a fence
-                if tile == FENCE:
+                # tile is a rock
+                if tile == ROCK:
                     
-                    # draw fence
-                    fence = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-                    pygame.draw.rect(screen, FENCE_COLOR, camera.apply(fence))
+                    # draw rock
+                    screen.blit(rock_image, camera.apply(tile_rect))
 
                 # tile is grass
                 else:
