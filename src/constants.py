@@ -64,3 +64,12 @@ UP = -1
 DOWN = 1
 LEFT = -1
 RIGHT =  1
+
+# sound fx
+SPLASH_SOUND_FILE = os.path.join(ASSET_DIR, "water-splash.mp3")
+WATER_FILL_SOUND_FILE = os.path.join(ASSET_DIR, "water-fill.mp3")
+CAN_CRUSH_SOUND_FILE = os.path.join(ASSET_DIR, "can-crush.mp3")
+BUILDING_SOUND_FILE = os.path.join(ASSET_DIR, "building.mp3")
+CASH_REGISTER_SOUND_FILE = os.path.join(ASSET_DIR, "cash-register.mp3")
+FIRE_SOUND_FILE = os.path.join(ASSET_DIR, "fire-crackle.mp3")
+HONK_SOUND_FILE = os.path.join(ASSET_DIR, "honk.mp3")

@@ -28,6 +28,9 @@ class Player(pygame.sprite.Sprite):
     def get_water(self, rect):
 
         if rect.colliderect(const.POND.rect):
+
+            fill_sound = pygame.mixer.Sound(const.WATER_FILL_SOUND_FILE)
+            pygame.mixer.Sound.play(fill_sound)
             const.INVENTORY_WATER = 1
 
 
@@ -40,6 +43,8 @@ class Player(pygame.sprite.Sprite):
             # junk can be picked up
             if self.rect.colliderect(trash.rect):
 
+                can_sound = pygame.mixer.Sound(const.CAN_CRUSH_SOUND_FILE)
+                pygame.mixer.Sound.play(can_sound)
                 const.JUNK.remove(trash)
                 const.INVENTORY_JUNK += 1
 
@@ -50,9 +55,11 @@ class Player(pygame.sprite.Sprite):
         bugs = const.FIREANTS
         for bug in bugs:
 
-            # junk can be picked up
+            # fireant can be eliminated
             if self.rect.colliderect(bug.rect) and const.INVENTORY_WATER > 0:
 
+                splash_sound = pygame.mixer.Sound(const.SPLASH_SOUND_FILE)
+                pygame.mixer.Sound.play(splash_sound)
                 const.FIREANTS.remove(bug)
                 const.INVENTORY_WATER -= 1
 
@@ -68,13 +75,17 @@ class Player(pygame.sprite.Sprite):
 
                 # tree is on fire and can be put out
                 if (veggie.get_state() == const.TREE_ON_FIRE) and (const.INVENTORY_WATER > 0):
-                    
+
+                    splash_sound = pygame.mixer.Sound(const.SPLASH_SOUND_FILE)
+                    pygame.mixer.Sound.play(splash_sound)
                     veggie.set_state(const.TREE_STUMP)
                     const.INVENTORY_WATER -= 1
 
                 # new tree can be planted
                 if (veggie.get_state() == const.TREE_STUMP) and (const.INVENTORY_TREES > 0):
 
+                    build_sound = pygame.mixer.Sound(const.BUILDING_SOUND_FILE)
+                    pygame.mixer.Sound.play(build_sound)
                     veggie.set_state(const.TREE_GOOD)
                     const.INVENTORY_TREES -= 1
 
@@ -84,6 +95,11 @@ class Player(pygame.sprite.Sprite):
         num_of_trees = int(const.INVENTORY_JUNK / const.JUNK_TO_TREES)
         const.INVENTORY_JUNK -= num_of_trees * const.JUNK_TO_TREES
         const.INVENTORY_TREES += num_of_trees
+
+        # play sound effect when a new trey is obtained
+        if num_of_trees > 0:
+            cash_sound = pygame.mixer.Sound(const.CASH_REGISTER_SOUND_FILE)
+            pygame.mixer.Sound.play(cash_sound)
 
 
     def check_collision(self, rect):
@@ -119,6 +135,17 @@ class Player(pygame.sprite.Sprite):
 
             # collision detected
             if rect.colliderect(obstacle.rect):
+
+                # firant sound effect
+                if obstacle in const.FIREANTS:
+                    fire_sound = pygame.mixer.Sound(const.FIRE_SOUND_FILE)
+                    pygame.mixer.Sound.play(fire_sound)
+
+                # litterbug sound effect
+                if obstacle in const.LITTERBUGS:
+                    honk_sound = pygame.mixer.Sound(const.HONK_SOUND_FILE)
+                    pygame.mixer.Sound.play(honk_sound)
+
                 return True
                 
         return False
