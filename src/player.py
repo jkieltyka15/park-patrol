@@ -3,7 +3,6 @@ import os
 
 # local libraries
 import constants as const
-import utility as util
 
 # sprite assets
 SPRITE_RANGER_RACHEL_L = os.path.join(const.ASSET_DIR, "ranger-rachel_left.png")
@@ -26,13 +25,37 @@ class Player(pygame.sprite.Sprite):
         self.speed = 8
 
 
+    def check_collision(self, rect):
+
+        # convert pixel position to tile indices for all four corners of the player's rect
+        corners = [
+            (rect.left // const.TILE_SIZE, rect.top // const.TILE_SIZE),        # top-left
+            (rect.right // const.TILE_SIZE, rect.top // const.TILE_SIZE),       # top-right
+            (rect.left // const.TILE_SIZE, rect.bottom // const.TILE_SIZE),     # bottom-left
+            (rect.right // const.TILE_SIZE, rect.bottom // const.TILE_SIZE),    # bottom-right
+        ]
+
+        # Check each corner for collision with a walls
+        for corner in corners:
+
+            (tile_x, tile_y) = corner
+
+            if (0 <= tile_x < const.MAP_WIDTH) and (0 <= tile_y < const.MAP_HEIGHT):
+
+                # collision detected
+                if const.PARK_MAP[tile_y][tile_x] == const.OBSTACLE:
+                    return True
+                
+        return False
+
+
     def move(self, dx, dy):
 
         # calculate new position
         new_rect = self.rect.move(dx * self.speed, dy * self.speed)
 
         # check for collision
-        if not util.check_collision(new_rect):
+        if not self.check_collision(new_rect):
             self.rect = new_rect
         
         # prevent moving off-screen
