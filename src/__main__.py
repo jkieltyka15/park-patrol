@@ -84,7 +84,7 @@ class Player(pygame.sprite.Sprite):
         self.image = player_image
         self.rect = self.image.get_rect()
         self.rect.topleft = (x * TILE_SIZE, y * TILE_SIZE)
-        self.speed = 4
+        self.speed = 8
 
 
     def move(self, dx, dy):
@@ -190,6 +190,11 @@ def main():
         # down
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             dy = 1
+
+        # run
+        if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
+            dy *= 2
+            dx *= 2
         
         # update player and camera
         player.move(dx, dy)
