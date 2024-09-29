@@ -37,13 +37,8 @@ def initialize(screen, clock):
     const.TREES.append(tree.Tree(const.TREE_GOOD, 13, 13))
     const.TREES.append(tree.Tree(const.TREE_GOOD, 40, 15))
     const.TREES.append(tree.Tree(const.TREE_GOOD, 8, 5))
-    const.TREES.append(tree.Tree(const.TREE_GOOD, 2, 15))
-    const.TREES.append(tree.Tree(const.TREE_GOOD, 40, 6))
-    # const.TREES.append(tree.Tree(const.TREE_STUMP, , ))
-    # const.TREES.append(tree.Tree(const.TREE_STUMP, , ))
-    # const.TREES.append(tree.Tree(const.TREE_STUMP, , ))
-    # const.TREES.append(tree.Tree(const.TREE_ON_FIRE, , ))
-    # const.TREES.append(tree.Tree(const.TREE_ON_FIRE, , ))
+    const.TREES.append(tree.Tree(const.TREE_STUMP, 2, 15))
+    const.TREES.append(tree.Tree(const.TREE_ON_FIRE, 40, 6))
 
     # create pond
     const.POND = pond.Pond(20, 8)
@@ -156,6 +151,10 @@ def main():
 
         # draw ranger rachel
         screen.blit(const.RANGER_RACHEL.image, camera.apply(const.RANGER_RACHEL.rect))
+
+        # draw junk
+        for trash in const.JUNK:
+            screen.blit(trash.image, camera.apply(trash.rect))
 
         # draw litterbugs
         for bug in const.LITTERBUGS:

@@ -27,6 +27,14 @@ class Tree(pygame.sprite.Sprite):
                                                       (self.image_tree_good.get_width() * scale,
                                                        self.image_tree_good.get_height() * scale))
 
+        self.image_tree_stump = pygame.transform.scale(self.image_tree_stump,
+                                                      (self.image_tree_stump.get_width() * scale,
+                                                       self.image_tree_stump.get_height() * scale))
+        
+        self.image_tree_fire = pygame.transform.scale(self.image_tree_fire,
+                                                      (self.image_tree_fire.get_width() * scale,
+                                                       self.image_tree_fire.get_height() * scale))
+
         # determine tree start state
         if start_state == const.TREE_STUMP:
             self.image = self.image_tree_stump

@@ -5,19 +5,19 @@ import os
 import constants as const
 
 # sprite assets
-SPRITE_POND = os.path.join(const.ASSET_DIR, "pond.png")
+SPRITE_JUNK = os.path.join(const.ASSET_DIR, "junk.png")
 
-# pond class
-class Pond(pygame.sprite.Sprite):
+# junk class
+class Junk(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
 
         super().__init__()
 
-        self.image = pygame.image.load(SPRITE_POND)
+        self.image = pygame.image.load(SPRITE_JUNK)
 
         # scale images
-        scale = 2.4
+        scale = 0.2
         self.image = pygame.transform.scale(self.image, 
                                             (self.image.get_width() * scale, self.image.get_height() * scale))
 

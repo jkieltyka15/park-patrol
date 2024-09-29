@@ -1,8 +1,10 @@
 import pygame
+import random
 import os
 
 # local libraries
 import constants as const
+import junk
 
 # sprite assets
 SPRITE_LITTER_BUG_L = os.path.join(const.ASSET_DIR, "litterbug_left.png")
@@ -35,6 +37,15 @@ class Litterbug(pygame.sprite.Sprite):
 
         self.speed = 4
         self.direction = (x_direction, y_direction)
+
+    
+    def drop_junk(self):
+
+        # one in twenty probality of dropping junk
+        if random.randint(1, 500) == 250:
+            x = (self.rect.left // const.TILE_SIZE + self.rect.right // const.TILE_SIZE) / 2
+            y = (self.rect.top // const.TILE_SIZE + self.rect.bottom // const.TILE_SIZE) / 2
+            const.JUNK.append(junk.Junk(x, y))  # Adjust to center the item
 
 
     def check_collision(self, rect):
@@ -159,3 +170,6 @@ class Litterbug(pygame.sprite.Sprite):
 
         elif dx == const.RIGHT:
             self.image = self.image_bug_right
+
+        # chance to drop junk
+        self.drop_junk()
