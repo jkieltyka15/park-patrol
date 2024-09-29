@@ -7,15 +7,18 @@ GAME_NAME = "PARK PATROL"
 
 # directory of where game is located
 GAME_DIR = sys.path[0]
+ASSET_DIR = os.path.join(GAME_DIR, "../assets/")
 
 # target frame rate
 TARGET_FPS = 60
 
 # sprite assets
-SPRITE_RANGER_RACHEL = os.path.join(GAME_DIR, "../assets/ranger-rachel.png")
+SPRITE_RANGER_RACHEL = os.path.join(ASSET_DIR, "ranger-rachel.png")
+SPRITE_GRASS = os.path.join(ASSET_DIR, "grass.png")
 
 # dimensions
-TILE_SIZE = 80
+TILE_SIZE = 100
+TILE_2D = (TILE_SIZE, TILE_SIZE)
 MAP_HEIGHT = 25
 MAP_WIDTH = MAP_HEIGHT * 2
 
@@ -66,6 +69,13 @@ def check_collision(x, y):
 
 # load player sprite
 player_image = pygame.image.load(SPRITE_RANGER_RACHEL)
+
+# load terrain sprites
+grass_image = pygame.image.load(SPRITE_GRASS)
+
+# scale terrain sprites
+grass_image = pygame.transform.scale(grass_image, TILE_2D)
+
 
 # player class
 class Player(pygame.sprite.Sprite):
@@ -187,14 +197,12 @@ def main():
         player.move(dx, dy)
         camera.update(player)
         
-        # fill background with grass
-        screen.fill(GRASS_COLOR)
-        
         # draw park map
         for row in range(MAP_HEIGHT):
             for col in range(MAP_WIDTH):
 
                 tile = park_map[row][col]
+                tile_rect = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
 
                 # tile is a fence
                 if tile == FENCE:
@@ -202,6 +210,11 @@ def main():
                     # draw fence
                     fence = pygame.Rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE)
                     pygame.draw.rect(screen, FENCE_COLOR, camera.apply(fence))
+
+                # tile is grass
+                else:
+                    screen.blit(grass_image, camera.apply(tile_rect))
+
         
         # draw player
         screen.blit(player.image, camera.apply(player.rect))
