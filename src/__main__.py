@@ -18,6 +18,9 @@ def initialize(screen, clock):
     # initialize Pygame
     pygame.init()
 
+    # hide the mouse
+    pygame.mouse.set_visible(False)
+
     # start background music
     music_file = os.path.join(const.ASSET_DIR, "background-music.mp3")
     pygame.mixer.init()
