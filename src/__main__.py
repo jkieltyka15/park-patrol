@@ -5,6 +5,7 @@ import sys
 import constants as const
 import camera as cam
 import player
+import litterbug
 
 # initalize pygame and core game components and returns (screen, clock) tuple
 def initialize(screen, clock):

@@ -15,12 +15,8 @@ TARGET_FPS = 60
 SCREEN_WIDTH = None
 SCREEN_HEIGHT = None
 
-# the game map, which will be set in main
+# the game map, which will be set in main (dynamic)
 PARK_MAP = None
-
-# sprite assets
-SPRITE_GRASS = os.path.join(ASSET_DIR, "grass.png")
-SPRITE_ROCK = os.path.join(ASSET_DIR, "rock.png")
 
 # dimensions
 TILE_SIZE = 100
@@ -28,13 +24,17 @@ TILE_2D = (TILE_SIZE, TILE_SIZE)
 MAP_HEIGHT = 25
 MAP_WIDTH = MAP_HEIGHT * 2
 
-# traversable terrains
+# sprite assets
+SPRITE_GRASS = os.path.join(ASSET_DIR, "grass.png")
+SPRITE_ROCK = os.path.join(ASSET_DIR, "rock.png")
+
+# traversable 
 TRAVERSABLE = 0
-GRASS = 0
+GRASS = 0 - 0
 
 # terrain obstacles
-OBSTACLE = 1
-ROCK = 1
+OBSTACLE = TRAVERSABLE + 1
+ROCK = OBSTACLE + 0
 
 # directions
 UP = -1
