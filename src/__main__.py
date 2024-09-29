@@ -52,6 +52,17 @@ def main():
     # create player
     ranger = player.Player(5, 5)
 
+    # create litterbugs
+    litterbugs = []
+    litterbugs.append(litterbug.Litterbug(10, 10, 0, const.DOWN))
+    litterbugs.append(litterbug.Litterbug(20, 15, const.LEFT, const.DOWN))
+    litterbugs.append(litterbug.Litterbug(30, 20, const.RIGHT, const.DOWN))
+    litterbugs.append(litterbug.Litterbug(40, 15, 0, const.UP))
+    litterbugs.append(litterbug.Litterbug(30, 20, const.LEFT, const.UP))
+    litterbugs.append(litterbug.Litterbug(20, 10, const.RIGHT, const.UP))
+    litterbugs.append(litterbug.Litterbug(10, 15, const.LEFT, 0))
+    litterbugs.append(litterbug.Litterbug(30, 20, const.RIGHT, 0))
+
     # initialize camera
     camera = cam.Camera(const.MAP_WIDTH * const.TILE_SIZE, const.MAP_HEIGHT * const.TILE_SIZE)
 
@@ -102,6 +113,10 @@ def main():
         # update ranger rachel and camera
         ranger.move(dx, dy)
         camera.update(ranger)
+
+        # update litterbugs
+        for bug in litterbugs:
+            bug.update()
         
         # draw park map
         for row in range(const.MAP_HEIGHT):
@@ -120,9 +135,12 @@ def main():
                 else:
                     screen.blit(grass_image, camera.apply(tile_rect))
 
-        
         # draw ranger rachel
         screen.blit(ranger.image, camera.apply(ranger.rect))
+
+        # draw litterbugs
+        for bug in litterbugs:
+            screen.blit(bug.image, camera.apply(bug.rect))
         
         # Update the display
         pygame.display.flip()
