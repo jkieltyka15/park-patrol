@@ -25,6 +25,32 @@ class Player(pygame.sprite.Sprite):
         self.speed = 8
 
 
+    def get_water(self, rect):
+
+        if rect.colliderect(const.POND.rect):
+            const.INVENTORY_WATER = 1
+
+
+    def pickup_junk(self):
+
+        # check if junk can be picked up
+        litter = const.JUNK
+        for trash in litter:
+
+            # junk can be picked up
+            if self.rect.colliderect(trash.rect):
+
+                const.JUNK.remove(trash)
+                const.INVENTORY_JUNK += 1
+
+    
+    def trade_junk_for_trees(self):
+
+        num_of_trees = int(const.INVENTORY_JUNK / const.JUNK_TO_TREES)
+        const.INVENTORY_JUNK -= num_of_trees * const.JUNK_TO_TREES
+        const.INVENTORY_TREES += num_of_trees
+
+
     def check_collision(self, rect):
 
         # convert pixel position to tile indices for all four corners of the player's rect
@@ -64,8 +90,17 @@ class Player(pygame.sprite.Sprite):
 
     def move(self, dx, dy):
 
+        # pickup junk if possible
+        self.pickup_junk()
+
+        # trade junk for trees if player has enough in inventory
+        self.trade_junk_for_trees()
+
         # calculate new position
         new_rect = self.rect.move(dx * self.speed, dy * self.speed)
+
+        # get water if by pond
+        self.get_water(new_rect)
 
         # check for collision
         if not self.check_collision(new_rect):

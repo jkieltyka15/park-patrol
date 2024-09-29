@@ -27,13 +27,15 @@ TREE_GOOD = 0
 TREE_STUMP = 1
 TREE_ON_FIRE = 2
 
-# ranger rachel player, whcih will be set in (dynamic)
+# ranger rachel player, which will be set in (dynamic)
 RANGER_RACHEL = None
+INVENTORY_WATER = 0
+INVENTORY_JUNK = 0
+INVENTORY_TREES = 0
+JUNK_TO_TREES = 10
 
-# list of litterbugs, which will be set in main (dynamic)
+# litterbugs
 LITTERBUGS = []
-
-# list of junk dropped by litterbugs and can be picked up by ranger rachel
 JUNK = []
 
 # dimensions

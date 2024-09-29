@@ -3,6 +3,7 @@ import sys
 
 # local libraries
 import constants as const
+import colors as color
 import camera as cam
 import player
 import litterbug
@@ -34,9 +35,9 @@ def initialize(screen, clock):
                         else const.TRAVERSABLE for x in range(const.MAP_WIDTH)] for y in range(const.MAP_HEIGHT)]
     
     # create trees
-    const.TREES.append(tree.Tree(const.TREE_GOOD, 13, 13))
-    const.TREES.append(tree.Tree(const.TREE_GOOD, 40, 15))
-    const.TREES.append(tree.Tree(const.TREE_GOOD, 8, 5))
+    const.TREES.append(tree.Tree(const.TREE_STUMP, 13, 13))
+    const.TREES.append(tree.Tree(const.TREE_STUMP, 40, 15))
+    const.TREES.append(tree.Tree(const.TREE_STUMP, 8, 5))
     const.TREES.append(tree.Tree(const.TREE_STUMP, 2, 15))
     const.TREES.append(tree.Tree(const.TREE_ON_FIRE, 40, 6))
 
@@ -57,6 +58,29 @@ def initialize(screen, clock):
     const.LITTERBUGS.append(litterbug.Litterbug(5, 1, const.RIGHT, 0))
     
     return (screen, clock)
+
+
+# display ranger rachel's inventory
+def display_inventory(screen):
+
+    # setup font for item counter display
+    font = pygame.font.SysFont(None, 36)
+
+    # render the text showing the number of items collected
+    hasWater = "No" if const.INVENTORY_WATER == 0 else "Yes" 
+    item_text = font.render(f"  Water: {hasWater}  Junk: {const.INVENTORY_JUNK}   Trees: {const.INVENTORY_TREES}",
+                            True, color.BLACK)
+    
+    # draw the box for the text
+    position = (const.SCREEN_WIDTH - 380, 10, 380, 40)
+    pygame.draw.rect(screen, color.WHITE, position)
+
+    # draw box border
+    pygame.draw.rect(screen, color.BLACK, position, 2)
+    
+    # blit the text onto the screen
+    screen.blit(item_text, (position[0], position[1] + 10))
+
 
 # initializes game and runs game loop
 def main():
@@ -163,6 +187,9 @@ def main():
         # draw trees
         for tree in const.TREES:
             screen.blit(tree.image, camera.apply(tree.rect))
+
+        # draw inventory board
+        display_inventory(screen)
         
         # Update the display
         pygame.display.flip()
