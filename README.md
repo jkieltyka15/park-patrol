@@ -8,12 +8,16 @@ The fire ants had always been a nuisance, but this summer, they’d become somet
 
 Flamethrowers.
 
+
 # How to Play:
+
     1. Setup a Python3 virtual environment.
     2. Install the requirements in Requirements.txt using pip.
     3. In the main game directory, run the command ./park-patrol.sh
 
+
 # Controls:
+
     Up - W, Up Arrow
     Down - S, Down Arrow
     Left - A, Left Arrow
@@ -21,6 +25,8 @@ Flamethrowers.
     Sprint - Space, Shift
     Quit - Esc
 
+
 # Tips:
+
     * Use items and barriers in the environment. Good decisions are rewarded.
     * Litterbugs are meh, but the fireants must be stopped!!!
