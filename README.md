@@ -31,4 +31,4 @@ Devpost Submission: https://devpost.com/software/park-patrol
 # Tips:
 
     * Use items and barriers in the environment. Good decisions are rewarded.
-    * Litterbugs are meh, but the fireants must be stopped!!!
+    * Litterbugs are meh, but the fire ants must be stopped!!!
