@@ -15,7 +15,10 @@ Devpost Submission: https://devpost.com/software/park-patrol
 
     1. Setup a Python3 virtual environment.
     2. Install the requirements in Requirements.txt using pip.
-    3. In the main game directory, run the command ./park-patrol.sh
+    3. Navigate to the main game directory.
+    4. Run the command below based on your operating system.
+        Linux: ./park-patrol.sh
+        Windows: park-patrol.bat
 
 
 # Controls:
@@ -31,4 +34,4 @@ Devpost Submission: https://devpost.com/software/park-patrol
 # Tips:
 
     * Use items and barriers in the environment. Good decisions are rewarded.
-    * Litterbugs are meh, but the fire ants must be stopped!!!
+    * Litterbugs are not a threat, but the fire ants must be stopped!!!
