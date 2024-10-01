@@ -65,6 +65,10 @@ DOWN = 1
 LEFT = -1
 RIGHT =  1
 
+# background music
+MUSIC_FILE = os.path.join(ASSET_DIR, "background-music.mp3")
+MUSIC_VOLUME = 0.08
+
 # sound fx
 SPLASH_SOUND_FILE = os.path.join(ASSET_DIR, "water-splash.mp3")
 WATER_FILL_SOUND_FILE = os.path.join(ASSET_DIR, "water-fill.mp3")

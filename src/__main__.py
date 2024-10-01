@@ -22,9 +22,9 @@ def initialize(screen, clock):
     pygame.mouse.set_visible(False)
 
     # start background music
-    music_file = os.path.join(const.ASSET_DIR, "background-music.mp3")
     pygame.mixer.init()
-    pygame.mixer.music.load(music_file) 
+    pygame.mixer.music.load(const.MUSIC_FILE)
+    pygame.mixer.music.set_volume(const.MUSIC_VOLUME)
     pygame.mixer.music.play(-1,0.0)
 
     # get display information for fullscreen mode
