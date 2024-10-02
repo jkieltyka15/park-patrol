@@ -163,25 +163,20 @@ def main():
         dx = dy = 0
 
         # left
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT]:
             dx = const.LEFT
         
         # right
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT]:
             dx = const.RIGHT
 
         # up
-        if keys[pygame.K_w] or keys[pygame.K_UP]:
+        if keys[pygame.K_UP]:
             dy = const.UP
 
         # down
-        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+        if keys[pygame.K_DOWN]:
             dy = const.DOWN
-
-        # run
-        if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT] or keys[pygame.K_SPACE]:
-            dy *= 2
-            dx *= 2
         
         # update ranger rachel and camera
         const.RANGER_RACHEL.move(dx, dy)

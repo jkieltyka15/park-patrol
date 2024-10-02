@@ -23,11 +23,10 @@ Devpost Submission: https://devpost.com/software/park-patrol
 
 # Controls:
 
-    Up - W, Up Arrow
-    Down - S, Down Arrow
-    Left - A, Left Arrow
-    Righf - D, Right Arrow
-    Sprint - Space, Shift
+    Up - Up Arrow
+    Down - Down Arrow
+    Left - Left Arrow
+    Right - Right Arrow
     Quit - Esc
 
 

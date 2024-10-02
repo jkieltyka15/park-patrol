@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = (x * const.TILE_SIZE, y * const.TILE_SIZE)
 
-        self.speed = 8
+        self.speed = 20
 
 
     def get_water(self, rect):
